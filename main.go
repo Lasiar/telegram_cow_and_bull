@@ -30,7 +30,7 @@ func getUserInfo(update tgbotapi.Update) string {
 func main() {
 	bot := new(Bot)
 	bot.New()
-	GetConfig().LogInfo.Printf("[Authorized on account] %s", bot.Self.UserName)
+//	GetConfig().LogInfo.Printf("[Authorized on account] %s", bot.Self.UserName)
 	var game IDPlayers
 	game = make(map[int64]*Game)
 	game.NewGame(10)
