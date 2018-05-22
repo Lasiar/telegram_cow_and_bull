@@ -2,3 +2,5 @@
 conf.json
 #binary file
 telegramGame
+#jetbrains conf
+./idea/
