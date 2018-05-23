@@ -16,7 +16,7 @@ type config struct {
 
 func (c *config) load() {
 	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
-	confFile, err := os.Open("conf.json")
+	confFile, err := os.Open("./conf.json")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -25,9 +25,9 @@ func (c *config) load() {
 		log.Fatal("Read config file: ", err)
 	}
 
-	c.LogError = log.New(os.Stderr, "[ERROR] ", log.Ldate|log.Ltime|log.Lshortfile)
-	c.LogWarn = log.New(os.Stderr, "[WARNING] ", log.Ldate|log.Ltime)
-	c.LogInfo = log.New(os.Stderr, "[INFO] ", log.Ldate|log.Ltime)
+	c.LogError = log.New(os.Stdout, "[ERROR] ", log.Ldate|log.Ltime|log.Lshortfile)
+	c.LogWarn = log.New(os.Stdout, "[WARNING] ", log.Ldate|log.Ltime)
+	c.LogInfo = log.New(os.Stdout, "[INFO] ", log.Ldate|log.Ltime)
 
 }
 
