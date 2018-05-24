@@ -17,7 +17,6 @@ func (t *Telegram) SendAnswer(id int64, answer string) error {
 	return err
 }
 
-
 func (t *Telegram) Run() {
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
@@ -31,7 +30,6 @@ func (t *Telegram) Run() {
 		t.handlingMessage(update)
 	}
 }
-
 
 func (t *Telegram) handlingMessage(update tgbotapi.Update) {
 
@@ -72,11 +70,12 @@ func (t *Telegram) handlingMessage(update tgbotapi.Update) {
 
 	if game, ok := t.sessions.GetGame(update.Message.Chat.ID); ok {
 		if answer, done := t.sessions.Play(update.Message.Chat.ID, update.Message.Text); done {
-			str := fmt.Sprint(answer, " Число найдено за ", game.step)
+			str := fmt.Sprint(answer, " Число найдено за ", game.step,  " "+game.GetStingStepLine(), ". Игра будет сброшена")
 			err := t.SendAnswer(update.Message.Chat.ID, str)
 			if err != nil {
 				GetConfig().LogError.Printf("[ERROR SEND MESSAGE] msg: %s; err: %s", str, err)
 			}
+			t.sessions.DeleteGame(update.Message.Chat.ID)
 		} else {
 			err := t.SendAnswer(update.Message.Chat.ID, answer)
 			if err != nil {
