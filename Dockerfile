@@ -6,9 +6,9 @@ RUN dep ensure -vendor-only
 COPY ./*.go /go/src/project/
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo  -o /go/bin/app
 
-
-FROM alpine
-RUN  apk add --no-cache --virtual ca-certificates
-COPY --from=builder go/bin/app /app
-ADD  conf.json /
-CMD  ["/app"]
+FROM amd64/alpine
+RUN mkdir /app
+COPY --from=builder /go/bin/app /app
+ADD conf.json /app/conf.json
+WORKDIR /app
+CMD ["/app/app"]

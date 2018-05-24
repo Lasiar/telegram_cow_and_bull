@@ -20,9 +20,15 @@ func (c *config) load() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	dc := json.NewDecoder(confFile)
+
 	if err := dc.Decode(&c); err != nil {
 		log.Fatal("Read config file: ", err)
+	}
+
+	if c.Token == "" {
+		log.Fatal("Wrong config file")
 	}
 
 	c.LogError = log.New(os.Stdout, "[ERROR] ", log.Ldate|log.Ltime|log.Lshortfile)
