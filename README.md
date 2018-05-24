@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html><head><meta charset="utf-8"><title>Untitled Document.md</title>
+<html><head><meta charset="utf-8">
 </head><body id="preview">
 <h1><a id="Telegram_simple_game_0"></a>Telegram simple game</h1>
 <h1><a id="Get_started_2"></a>Get started</h1>
