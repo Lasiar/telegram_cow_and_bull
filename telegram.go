@@ -1,8 +1,8 @@
 package main
 
 import (
-	"gopkg.in/telegram-bot-api.v4"
 	"fmt"
+	"gopkg.in/telegram-bot-api.v4"
 	"strconv"
 )
 
@@ -39,6 +39,16 @@ func (t *Telegram) handlingMessage(update tgbotapi.Update) {
 
 	GetConfig().LogInfo.Printf("[New message] [%s] %s", getUserInfo(update), update.Message.Text)
 
+	if update.Message.Command() == "start" {
+		GetConfig().LogInfo.Printf("[New gamer] %s", getUserInfo(update))
+		answer := "Добро пожаловать"
+		err := t.SendAnswer(update.Message.Chat.ID, answer)
+		if err != nil {
+			GetConfig().LogError.Printf("[ERROR SEND MESSAGE] msg: %s; err: %s", answer, err)
+		}
+		return
+	}
+
 	if update.Message.Command() == "new" {
 		game := t.sessions.NewGame(update.Message.Chat.ID)
 		GetConfig().LogInfo.Printf("[New game] [%s] %s", getUserInfo(update), game)
@@ -70,7 +80,7 @@ func (t *Telegram) handlingMessage(update tgbotapi.Update) {
 
 	if game, ok := t.sessions.GetGame(update.Message.Chat.ID); ok {
 		if answer, done := t.sessions.Play(update.Message.Chat.ID, update.Message.Text); done {
-			str := fmt.Sprint(answer, " Число найдено за ", game.step,  " "+game.GetStingStepLine(), ". Игра будет сброшена")
+			str := fmt.Sprint(answer, " Число найдено за ", game.step, " "+game.GetStingStepLine(), ". Игра будет сброшена")
 			err := t.SendAnswer(update.Message.Chat.ID, str)
 			if err != nil {
 				GetConfig().LogError.Printf("[ERROR SEND MESSAGE] msg: %s; err: %s", str, err)

@@ -1,12 +1,12 @@
 package main
 
 import (
+	"bytes"
+	"fmt"
 	"math/rand"
-	"time"
 	"strconv"
 	"strings"
-	"fmt"
-	"bytes"
+	"time"
 )
 
 const (
@@ -25,14 +25,14 @@ func (gs *GameSessions) Play(key int64, guess string) (string, bool) {
 		return "", false
 	}
 
-	game.step ++
+	game.step++
 
 	check := 0
 	buf := new(strings.Builder)
 	for i, char := range guess {
 		if byte(char) == game.secret[i] {
 			buf.WriteString(right)
-			check ++
+			check++
 			continue
 		}
 		if strings.Contains(game.secret, string(char)) {
@@ -52,14 +52,14 @@ func (gs *GameSessions) Play2(key int64, guess string) (string, bool) {
 		return "", false
 	}
 
-	game.step ++
+	game.step++
 
 	check := 0
 	buf := new(bytes.Buffer)
 	for i, char := range guess {
 		if byte(char) == game.secret[i] {
 			buf.WriteString(right)
-			check ++
+			check++
 			continue
 		}
 		if strings.Contains(game.secret, string(char)) {
@@ -78,7 +78,7 @@ func (gs *GameSessions) Play3(id int64, guess string) (string, bool) {
 	for i, char := range guess {
 		if byte(char) == (*gs)[id].secret[i] {
 			buf.WriteString(right)
-			check ++
+			check++
 			continue
 		}
 		if strings.Contains((*gs)[id].secret, string(char)) {

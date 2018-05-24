@@ -1,10 +1,10 @@
 package main
 
 import (
-	"sync"
+	"encoding/json"
 	"log"
 	"os"
-	"encoding/json"
+	"sync"
 )
 
 type config struct {
